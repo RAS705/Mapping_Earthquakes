@@ -7,10 +7,7 @@ let map = L.map("map", {
     zoom: 11
   });
 
-//console.log('Key: ', API_KEY);
-
-//Add a marker to the map
-var marker = L.marker([30.313, -87.66]).addTo(map);
+console.log('Key: ', API_KEY);
 
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
