@@ -1,11 +1,17 @@
 
-//var map = L.map('map').setView([51.505, -0.09], 13);
-let map = L.map("map", {
-    center: [
-      30.3, -87.7
-    ],
-    zoom: 10
-  });
+// Create the map object with center and zoom level.
+let map = L.map('mapid').setView([30, 30], 2);
+
+// Accessing the airport GeoJSON URL
+let airportData = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/main/majorAirports.json";
+
+
+// Grabbing our GeoJSON data.
+d3.json(airportData).then(function(data) {
+  console.log(data);
+// Creating a GeoJSON layer with the retrieved data.
+L.geoJSON(data).addTo(map);
+});
 
 console.log('Key: ', API_KEY);
 
