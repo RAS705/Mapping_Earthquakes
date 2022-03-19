@@ -1,19 +1,23 @@
 
 // Create the map object with center and zoom level.
-let map = L.map('mapid').setView([30, 30], 2);
+let map = L.map('map').setView([30, 30], 2);
 
 // Accessing the airport GeoJSON URL
-let airportData = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/main/majorAirports.json";
+let airportData = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/main/static/js/majorAirports.json";
 
+console.log(airportData);
 
 // Grabbing our GeoJSON data.
 d3.json(airportData).then(function(data) {
-  console.log(data);
-// Creating a GeoJSON layer with the retrieved data.
-L.geoJSON(data).addTo(map);
-});
 
-console.log('Key: ', API_KEY);
+console.log(data);
+
+L.geoJSON(data, {
+onEachFeature: function(feature, layer) {
+  layer.bindPopup("<h2>Airport Code: " + feature.properties.faa + "</h2> <hr> <h3>Airprot name: " + feature.properties.name + "</h3>");
+ }})
+.addTo(map)
+});
 
 //Add a marker for my house
 var marker = L.marker([30.31289, -87.65957])
