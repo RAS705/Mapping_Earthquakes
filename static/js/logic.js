@@ -1,11 +1,51 @@
 
+let dark = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  maxZoom: 18,
+  //id: 'mapbox/streets-v11',
+  //id: 'mapbox/satellite-streets-v11',
+  id: 'mapbox/dark-v10',
+  tileSize: 512,
+  zoomOffset: -1,
+  accessToken: API_KEY
+});
+
+let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  maxZoom: 18,
+  id: 'mapbox/streets-v11',
+  //id: 'mapbox/light-v10',
+  //id: 'mapbox/satellite-streets-v11',
+  //id: 'mapbox/dark-v10',
+  tileSize: 512,
+  zoomOffset: -1,
+  accessToken: API_KEY
+});
+
+//console.log('APi_KEY: ', API_KEY);
+//console.log('streets: ', streets);
+//console.log('dark: ', dark);
+
+// Create a base layer that holds both maps.
+let baseMaps = {
+  Street: streets,
+  Dark: dark
+};
+
 // Create the map object with center and zoom level.
-let map = L.map('map').setView([30, 30], 2);
+let map = L.map('map',{
+  Center: [30, 30],
+  zoom: 2,
+  layers: [streets]
+});
+
+
+// Pass our map layers into our layers control and add the layers control to the map.
+//L.control.layers(baseMaps).addTo(map);
 
 // Accessing the airport GeoJSON URL
 let airportData = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/main/static/js/majorAirports.json";
 
-console.log(airportData);
 
 // Grabbing our GeoJSON data.
 d3.json(airportData).then(function(data) {
@@ -63,33 +103,23 @@ L.geoJSON(sanFranAirport, {
    }
 }).addTo(map);
 
-
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    //id: 'mapbox/streets-v11',
-    id: 'mapbox/satellite-streets-v11',
-    //id: 'mapbox/dark-v10',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: API_KEY
-});
 //}).addTo(map);
 
 // Then we add our 'graymap' tile layer to the map.
-streets.addTo(map);
+//streets.addTo(map);
+
 
 // Coordinates for each point to be used in the polyline.
-var line = [
-  [[37.6213, -122.3790], [30.1944, -97.67], [43.6835, -79.6149], [40.6372, -73.7788]],
-  [[33.9416, -118.4085], [37.6213, -122.3790], [40.7899, -111.9791], [47.4502, -122.3088]
-  ]
-];
+//var line = [
+//  [[37.6213, -122.3790], [30.1944, -97.67], [43.6835, -79.6149], [40.6372, -73.7788]],
+//  [[33.9416, -118.4085], [37.6213, -122.3790], [40.7899, -111.9791], [47.4502, -122.3088]
+//  ]
+//];
 
 // Create a polyline using the line coordinates and make the line red.
-L.polyline(line, {
-  color: "blue"
-}).addTo(map);
+//L.polyline(line, {
+//  color: "blue"
+//}).addTo(map);
 
 //Load city data from the Cities.js file
 let cityData = cities;
