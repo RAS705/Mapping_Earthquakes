@@ -32,16 +32,27 @@ let baseMaps = {
   Dark: dark
 };
 
+//var map = L.map('map').setView([51.505, -0.09], 13);
 // Create the map object with center and zoom level.
 let map = L.map('map',{
-  Center: [30, 30],
+  center: [
+    30, 30
+  ],
   zoom: 2,
   layers: [streets]
 });
 
+//let map = L.map('map',{
+//  center: [
+//    30.3, -87.7
+//  ],
+//  zoom: 11,
+//  layers: [streets]
+//});
+
 
 // Pass our map layers into our layers control and add the layers control to the map.
-//L.control.layers(baseMaps).addTo(map);
+L.control.layers(baseMaps).addTo(map);
 
 // Accessing the airport GeoJSON URL
 let airportData = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/main/static/js/majorAirports.json";
@@ -50,7 +61,7 @@ let airportData = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/
 // Grabbing our GeoJSON data.
 d3.json(airportData).then(function(data) {
 
-console.log(data);
+//console.log(data);
 
 L.geoJSON(data, {
 onEachFeature: function(feature, layer) {
@@ -126,7 +137,7 @@ let cityData = cities;
 
 // Loop through the cities array and create one marker for each city.
 cityData.forEach(function(city) {
-  console.log(city)
+  //console.log(city)
   //L.marker(city.location)
   L.circleMarker(city.location, {
     radius: city.population/100000
