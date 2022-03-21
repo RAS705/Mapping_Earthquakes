@@ -1,4 +1,3 @@
-
 let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
   maxZoom: 18,
@@ -29,16 +28,16 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
 // Create a base layer that holds both maps.
 let baseMaps = {
   Street: streets,
-  SatelliteStreets: satelliteStreets
+  Satellite: satelliteStreets
 };
 
 //var map = L.map('map').setView([51.505, -0.09], 13);
 // Create the map object with center and zoom level.
 let map = L.map('map',{
   center: [
-    43.7, -79.3
+    39.5, -98.5
   ],
-  zoom: 11,
+  zoom: 3,
   layers: [satelliteStreets]
 });
 
@@ -50,26 +49,19 @@ let map = L.map('map',{
 //  layers: [streets]
 //});
 
-
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
 // Accessing the Toronto airline routes GeoJSON URL.
-let torontoHoods = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/main/static/js/torontoNeighborhoods.json";
+let weekearthquakes = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Grabbing our GeoJSON data.
-d3.json(torontoHoods).then(function(data) {
-//  console.log(data);
-// Creating a GeoJSON layer with the retrieved data.
-L.geoJSON(data, {
-  onEachFeature: function(feature, layer) {
-    layer.bindPopup("<h2>Airline Code: " + feature.properties.airline + "</h2> <hr> <h3>Destination : " + feature.properties.dst + "</h3>");
-   }}) 
-.addTo(map);
-});
+d3.json(weekearthquakes).then(function(data) {
 
-
-
-
-
+  L.geoJSON(data, {
+    onEachFeature: function(feature, layer) {
+      layer.bindPopup("<h2>Place: " + feature.properties.place + "</h2> <hr> <h3>Magnitude : " + feature.properties.mag + "</h3>");
+     }}) 
+  .addTo(map);
+  });
 
