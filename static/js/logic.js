@@ -59,9 +59,13 @@ let torontoData = "https://raw.githubusercontent.com/RAS705/Mapping_Earthquakes/
 
 // Grabbing our GeoJSON data.
 d3.json(torontoData).then(function(data) {
-  console.log(data);
+//  console.log(data);
 // Creating a GeoJSON layer with the retrieved data.
-L.geoJSON(data).addTo(map);
+L.geoJSON(data, {
+  onEachFeature: function(feature, layer) {
+    layer.bindPopup("<h2>Airline Code: " + feature.properties.airline + "</h2> <hr> <h3>Destination : " + feature.properties.dst + "</h3>");
+   }}) 
+.addTo(map);
 });
 
 
